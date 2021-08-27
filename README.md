@@ -1,0 +1,2 @@
+# PrideGame
+Pridebot
