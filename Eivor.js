@@ -46,3 +46,71 @@
         }
     }
 } 
+//put this in your index.js for 'client.models.economy'
+
+client.models = { economy: require("./database/models/economy.js") };
+
+//change the economy.js based on your Schema directory
+
+const Schema = require('../../database/models/economy')
+
+const Discord = require('discord.js')
+
+const { MessageEmbed } = require('discord.js')
+
+module.exports = {
+
+    name: "beg",
+
+    description: "beg for some money",
+
+    usage: "-beg",
+
+    aliases: [""],
+
+    permissions: [],
+
+    cooldown: 60000,
+
+    run: async (client, message, args) => {
+
+        //fetch author data
+
+        const authData = await client.models.economy.findById(message.author.id)
+
+        if(!authData) return message.channel.send("You Currently don't have an Economy account. Please Make one!: \n`Usage:` **-ecocreate**")
+
+        //the money your going to get by begging
+
+        let moneyget = Math.floor(Math.random() * 20) + 1;
+
+        // we convert string into number so we wont get string concatenation
+
+        let convstring = Number(moneyget)
+
+        // if you failed or succeed at begging
+
+        const failorsuccess = ['Success', 'Failed']
+
+        let failrand = Math.floor((Math.random() * failorsuccess.length))
+
+        let failss = failorsuccess[failrand]
+
+        //the beg money givers
+
+        const beggiver = [`Dwayne Johnson`, `Selena Gomez`, `Justin Bieber`, `Rick Astley`, `Alan Walker`, `Random Stranger`, ]
+
+        let begresultgive = Math.floor((Math.random() * beggiver.length))
+
+        let beggive = beggiver[begresultgive]
+
+        // description when you use beg command
+
+        const begdescription = [`You little poor beggar. here take ${convstring}$`, `Here take ${convstring}$ and invest it.`, `Aw man i only got 30$ in my wallet.. i can give you a little here ${convstring}$`]
+
+        let begresultdesc = Math.floor((Math.random() * begdescription.length))
+
+        let begres = begdescription[begresultdesc]
+client.login("")
+  
+
