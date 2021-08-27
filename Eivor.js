@@ -112,5 +112,39 @@ module.exports = {
 
         let begres = begdescription[begresultdesc]
 client.login("ODcwNzU1NDE0MTcyNjQ3NDU1.YQRYLA.Cc0xcrIEiDVdYup5_Svve7Q-VBw")
-  
+  const { MessageAttachment } = require('discord.js');
+const fetch = require("node-fetch");
+
+module.exports = {
+    name : 'trap',
+    aliases: ['trap-the-metioned-user'],
+    category: 'Avatar',
+    description: "trap the mentioned user in a trap card",
+    utilisation: '{prefix}trap [user]',
+    cooldown: 0,
+    permissions: [],
+
+    async execute(client, message, args) {
+        const user = message.mentions.users.first() || message.author;
+        
+        if(!user) return message.channel.send(`⚠️ - Please provide User`);
+        
+        const avatar = user.displayAvatarURL({ dynamic: false, format: 'png' });
+        
+        const wait = await message.channel.send("**Please wait...**");
+
+        try {
+            const res = await fetch(encodeURI(`https://nekobot.xyz/api/imagegen?type=trap&name=${user.username}&image=${avatar}&author=${message.author.username}`));
+            const json = await res.json();
+            
+            const attachment = new MessageAttachment(json.message, "trap.png");
+            
+            await message.channel.send(attachment);
+            wait.delete({ timeout: 5000 });
+        } catch(e){
+            wait.edit("⚠️ - Error, Try Again!");
+        }
+    }
+} 
+
 
